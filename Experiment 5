@@ -1,0 +1,40 @@
+clc;
+clear all;
+close all;
+%system 1
+%denomcoeff
+b= [0.21 0.41 0.21]
+
+%num Coeff
+a= [1 -0.37 0.19]
+
+%freq response
+figure;
+freqz(b,a)
+
+%Impulse response
+figure;
+impz(b,a)
+
+%pole-zero plot
+[zer1,pol1]= tf2zp(b,a)
+%zeroes=2,pole=2
+figure;
+zplane(zer1,pol1)
+
+%system 2
+zer2= zer1;
+pol2= pol1 + 1;
+
+%transfer func
+[b2,a2]= zp2tf(zer2,pol2,1)
+figure;
+zplane(zer2,pol2);
+
+%Frequency Response
+figure;
+freqz(b2,a2)
+
+%Impulse response system 2
+figure;
+impz(b2,a2)
