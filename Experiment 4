@@ -1,0 +1,35 @@
+clc;
+clear all;
+%short sequence
+x= [1;1;1;1]
+%4 point DFT and iDFT
+N=4;
+x_fft=fft(x,N)
+x_fft= ifft(x_fft,N)
+
+%8 point DFT and iDFT
+N=8;
+x_8fft=fft(x,N)
+x_8fft= ifft(x_8fft,N)
+
+%Generate sinusoid
+T=2;
+f0=5; %Fundamental Freq= 5 cycles per sec
+fs=50; %sampling rate-50 samples per second
+t = 0:1/fs:T-1/fs;
+y=cos(2*pi*f0.*t);
+Ny=128; %take value greater than 100 to recover the sig
+y_fft= fft(y,Ny);
+%freq axis
+f = 0:fs/Ny:fs-fs/Ny;
+
+figure;
+subplot(2,1,1);
+stem(t,y,'markersize',1);
+xlabel('Time,s');
+ylabel('cosine');
+
+subplot(2,1,2);
+stem(f,abs(y_fft),'markersize',1);
+xlabel('Freq,Hz');
+ylabel('|y[k]|');
