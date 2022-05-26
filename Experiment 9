@@ -1,0 +1,45 @@
+clc; clear all;
+Fs = 8000;  % Sampling Frequency
+fp = 1500;
+fs = 2000;
+Ap = 3;
+As = 40;
+%% Filter Order
+[N1,wc1] = buttord(2*fp/Fs,2*fs/Fs,Ap,As);
+[N2,wc2] = cheb1ord(2*fp/Fs,2*fs/Fs,Ap,As);
+[N3,wc3] = cheb2ord(2*fp/Fs,2*fs/Fs,Ap,As);
+disp('Order of Butterworth Filter:')
+disp(N1)
+disp('Order of Chebyshev Type I Filter:')
+disp(N2)
+disp('Order of Chebyshev Type II Filter:')
+disp(N3)
+%% Filter Design
+[b1,a1] = butter(N1,wc1,'low'); %Butterworth
+[b2,a2] = cheby1(N2,Ap,wc2,'low'); %Chebyshev Type I LPF
+[b3,a3] = cheby2(N3,As,wc3,'low'); %Chebyshev Type II LPF
+%% Plots
+[h1,w1] = freqz(b1,a1,1024,Fs);
+[h2,w2] = freqz(b2,a2,1024,Fs);
+[h3,w3] = freqz(b3,a3,1024,Fs);
+figure;hold on;
+plot(w1,20*log10(abs(h1)),'r');
+plot(w2,20*log10(abs(h2)),'k');
+plot(w3,20*log10(abs(h3)),'m');
+hold off;
+xlabel('Frequency, Hz');
+ylabel('|H(\omega)|, dB');
+title('IIR LPF');
+legend('Butterworth','ChebyshevTypeI','Chebyshev TypeII');
+axis tight; grid on;
+%%
+figure;hold on;
+plot(w1,20*log10(abs(h1)),'r');
+plot(w2,20*log10(abs(h2)),'k');
+plot(w3,20*log10(abs(h3)),'m');
+hold off;
+xlabel('Frequency, Hz');
+ylabel('|H(\omega)|, dB');
+title('IIR LPF: zoomed in');
+legend('Butterworth','ChebyshevTypeI','Chebyshev TypeII');
+axis tight;ylim([-60 2]); grid on;
