@@ -1,0 +1,87 @@
+clc; clear all;
+% time axis
+ n  = -25:25;
+% unit impulse 
+delta = n==0;
+
+figure;
+subplot(1,2,1);
+plot(n,delta,'linewidth',1.5);
+title ("continuous delta");
+xlabel ("time");
+ylabel ("Amplitude");
+
+subplot(1,2,2);
+stem(n,delta,'markersize',2);
+title ("discrete delta");
+xlabel ("n");
+ylabel ("Amplitude");
+
+%unit step
+step = n>=0;
+
+figure;
+subplot(1,2,1);
+plot(n,step);
+title ("continuous step");
+xlabel ("time");
+ylabel ("Amplitude");
+
+subplot(1,2,2);
+stem(n,step);
+title ("discrete step");
+xlabel ("n");
+ylabel ("Amplitude");
+
+%ramp
+ramp = n.*step;
+
+figure;
+subplot(1,2,1);
+plot(n,ramp);
+title ("continuous ramp");
+xlabel ("time");
+ylabel ("Amplitude");
+
+subplot(1,2,2);
+stem(n,ramp);
+title ("discrete ramp");
+xlabel ("n");
+ylabel ("Amplitude");
+% sinusoidal
+
+a = 0.4;
+t = 0:0.1:6;
+sig=4*sin(2*pi*a*t);
+
+figure;
+plot(sig);
+title("Sinusoidal Signal");
+xlabel('Time');
+ylabel('Amplitude');
+
+
+figure;
+stem(sig);
+title("Sinusoidal Signal");
+xlabel('Time');
+ylabel('Amplitude');
+% Exponential
+
+X = -10:10;
+res = exp(X);
+
+
+figure;
+plot(X,res);
+title("Continuos Exponential");
+xlabel('Time');
+ylabel('Amplitude');
+
+
+figure;
+stem(X,res);
+title("Discrete Exponential");
+xlabel('Time');
+ylabel('Amplitude');
+
