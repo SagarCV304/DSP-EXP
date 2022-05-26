@@ -1,0 +1,40 @@
+clc; clear all;
+N = 40; % order
+Fc = 1000; % Cutofffreq (HZ)
+Fs = 8000; % Sampling freq (HZ)
+
+%% Compare windows
+win1 = rectwin(N+1);
+win2 = hamming(N+1);
+win3 = hann(N+1);
+
+figure; 
+hold on;
+stem(0:N,win1,'markersize',2);
+stem(0:N,win2,'markersize',2);
+stem(0:N,win3,'markersize',2);
+hold off;
+legend('Rectangular','Hamming','Hann');
+
+xlabel('Discrete Time,n');
+ylabel('window function');
+
+%% Low-pass filter
+b1 = fir1(N,2*Fc/Fs,'low',win1);
+b2 = fir1(N,2*Fc/Fs,'low',win2);
+b3 = fir1(N,2*Fc/Fs,'low',win3);
+
+[h1,w1] = freqz(b1,1,1024,Fs);
+[h2,w2] = freqz(b2,1,1024,Fs);
+[h3,w3] = freqz(b3,1,1024,Fs);
+
+figure;
+hold on;
+plot(w1, 20*log10(abs(h1)));
+plot(w2, 20*log10(abs(h2)));
+plot(w3, 20*log10(abs(h3)));
+hold off;
+legend('Rectangular','Hamming','Hann');
+xlabel('Frequency, Hz');
+ylabel('|H(w)|,LPF dB');
+
