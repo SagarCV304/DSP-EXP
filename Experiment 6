@@ -1,0 +1,41 @@
+clc;
+clear all; 
+close all;
+
+N=40;%order
+Fs= 8000; % sampling freq
+win= rectwin(N+1);
+
+%%Low-Pass filter
+fc=1000; % Cutofffreq(Hz)
+bLPF=fir1(N,2*fc/Fs,'low',win);
+%impulse response
+figure;impz(bLPF,1);
+%Frequency response
+figure;freqz(bLPF,1);
+
+%band pass filter
+fc1= 1000;
+fc2= 2000;
+bBPF=fir1(N,[2*fc1/Fs 2*fc2/Fs],'bandpass',win);
+%impulse response
+figure;impz(bBPF,1);
+%Frequency response
+figure;freqz(bBPF,1);
+
+%% band-stop filter
+fc1=1000;
+fc2=2000;
+bBSF=fir1(N,[2*fc1/Fs 2*fc2/Fs],'stop',win);
+%impulse response
+figure;impz(bBSF,1);
+%Frequency response
+figure;freqz(bBSF,1);
+
+%% High-pass filter
+fc3=1000; % Cutofffreq(Hz)
+bHPF=fir1(N,2*fc3/Fs,'high',win);
+%impulse response
+figure;impz(bHPF,1);
+%Frequency response
+figure;freqz(bHPF,1);
