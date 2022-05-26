@@ -1,0 +1,31 @@
+clc; clear all;
+%Generate Sinusoid
+T = 0.3; %Total Time Duration
+fo=5; %Frequency of Sinsuoid
+fs=600; %Sampling Frequency
+t1 = 0:1/fs:T-1/fs; %Time Vector
+y1= sin(2*pi*fo.*t1);
+
+%Upsample: Increase Sample Rate by Integer Factor, 4
+y1u= interp(y1,4);
+t1u=0:1/(4*fs):T-1/(4*fs);
+
+%Downsample: Decrease Sample Rate by Integer Factor, 4
+y1d= decimate(y1,4);
+t1d=0:1/(fs/4):T-1/(fs/4);
+
+%Resample: Change Sample Rate by 2/3
+y1r = resample (y1,2,3);
+t1r=0:1/(2*fs/3):T-1/(2*fs/3);
+
+%Plot
+figure; 
+subplot(411); stem(t1,y1,'markersize',1); axis tight;
+ylabel('Original');
+subplot(412); stem(t1u,y1u,'markersize', 1); axis tight;
+ylabel('Interpolation by 4');
+subplot(413); stem(t1d,y1d,'markersize', 1); axis tight;
+ylabel('Decimate by 4');
+subplot(414); stem(t1r,y1r,'markersize', 1); axis tight;
+ylabel('Resample by 2/3');
+
