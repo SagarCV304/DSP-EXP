@@ -1,0 +1,35 @@
+clc;
+clear all;
+close all;
+Fs = 8000; %sampling freq
+fp= 1500; %passband edge freq
+fs= 2000; %stopband edge freq
+Ap = 3; %passband ripple
+
+As = 40; %stopband attenuation
+
+%Filter order
+[N,wc] = buttord(2*fp/Fs,2*fs/Fs,Ap,As);
+
+%%Butterworth Filter designing
+[b1,a1] = butter(N-5,wc,'low');
+[b2,a2] = butter(N,wc,'low');
+[b3,a3] = butter(N+5,wc,'low');
+
+%%plots
+[h1,w1]= freqz(b1,a1,1024,Fs);
+[h2,w2]= freqz(b2,a2,1024,Fs); 
+[h3,w3]= freqz(b3,a3,1024,Fs);
+
+figure;
+hold on;
+plot(w1,20*log10(abs(h1)) );
+plot(w2,20*log10(abs(h2)) );%magnitude of H(jw) on y axis
+plot(w3,20*log10(abs(h3)) );
+hold off;
+grid on;
+legend('N-5','N','N+5');
+xlabel('Frequency,Hz');
+ylabel('|H(\omega)|,dB');
+
+ylim([-70 1]);xlim([0 2800]);
