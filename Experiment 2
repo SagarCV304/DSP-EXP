@@ -1,0 +1,49 @@
+clc;
+clear all;
+close all;
+A = 1; f0=9;
+x = @(t) A.*cos(2*pi*f0.*t);
+%% Critical Sampling
+fs1 = 2*f0; %Sampling rate
+t1 = 0:1/fs1:1; %time axis
+sig1 = x(t1);
+figure;
+ezplot(x,[0 1]);
+hold on;
+stem(t1,sig1);
+hold off;
+ylabel('cos(2 \pi 5t)')
+title('Critical Sampling, fs=10Hz')
+%% Under Sampling
+fs2 =f0; %Sampling rate
+t2 = 0:1/fs2:1; %time axis
+sig2 = x(t2);
+figure;
+ezplot(x,[0 1]);
+hold on;
+stem(t2,sig2);
+hold off;
+ylabel('cos(2 \pi 5t)')
+title('Under Sampling, fs=5Hz')
+%% Over Sampling
+fs3 = 10*f0; %Sampling rate
+t3 = 0:1/fs3:1; %time axis
+sig3 = x(t3);
+figure;
+ezplot(x,[0 1]);
+hold on;
+stem(t3,sig3);
+hold off;
+ylabel('cos(2 \pi 5t)')
+title('Over Sampling, fs=50Hz')
+%% Over Sampling
+fs4 = 74; %Sampling rate
+t4 = 0:1/fs4:1; %time axis
+sig4 = x(t4);
+figure;
+ezplot(x,[0 1]);
+hold on;
+stem(t4,sig4);
+hold off;
+ylabel('cos(2 \pi 5t)')
+title('Over Sampling, fs=74Hz')
