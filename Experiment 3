@@ -1,0 +1,47 @@
+clc;
+clear all;
+close all;
+pkg load signal;
+g=[1,2,3,4]; Ng=4; 
+h= [5,6]; Nh=2;
+%linear convolution
+y1=conv(g,h)
+
+%%circular convolution with modulo 4
+N=4;
+y2= cconv(g,h,N)
+
+%%
+Ny=Ng+Nh-1;
+y2a= cconv(g,h,Ny)
+
+figure;
+subplot(3,2,1);
+stem(0: Ng-1,g); grid on;
+xlabel('Discrete Time,n');
+ylabel('g[n]');
+xlim([-0.5 4.5])
+
+subplot(3,2,2);
+stem(0: Nh-1,h); grid on;
+xlabel('Discrete Time,n');
+ylabel('h[n]');
+xlim([-0.5 4.5])
+
+subplot(3,2,3);
+stem(0:(Ng+Nh-1)-1,y1); grid on;
+xlabel('Discrete Time,n');
+ylabel('linear conv, y1[n]');
+xlim([-0.5 4.5])
+
+subplot(3,2,4);
+stem(0:N-1,y2); grid on;
+xlabel('Discrete Time,n');
+ylabel('Circular conv, y2[n]')
+xlim([-0.5 4.5])
+
+subplot(3,2,5);
+stem(0:Ny-1,y2a); grid on;
+xlabel('Discrete Time,n');
+ylabel('Circular conv, y2a[n]')
+xlim([-0.5 4.5])
